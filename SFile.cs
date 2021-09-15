@@ -5,12 +5,14 @@ using System.Text;
 
 namespace Sound2sfxBlend
 {
+    //mostly copied from microsoft's documentation xd
     public class SFile : IEquatable<SFile>, IComparable<SFile>
     {
         public string SoundName { get; set; }
 
         public int SoundRPM { get; set; }
 
+        //build a working line of code
         public override string ToString()
         {
             return "[\"art/sound/engine/$name$/" + SoundName + "\", " + SoundRPM + "],";
@@ -24,7 +26,6 @@ namespace Sound2sfxBlend
         }
         public int SortByNameAscending(string name1, string name2)
         {
-
             return name1.CompareTo(name2);
         }
 
@@ -42,12 +43,14 @@ namespace Sound2sfxBlend
         {
             return SoundRPM;
         }
+
+        // Should also override == and != operators.
         public bool Equals(SFile other)
         {
             if (other == null) return false;
             return (this.SoundRPM.Equals(other.SoundRPM));
         }
-        // Should also override == and != operators.
+        
     }
 
 }

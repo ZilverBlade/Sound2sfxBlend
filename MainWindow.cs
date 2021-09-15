@@ -153,7 +153,7 @@ namespace Sound2sfxBlend
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.Text = "Sound2sfxBlend2D " + Application.ProductVersion;
         }
 
 

@@ -32,10 +32,11 @@ namespace Sound2sfxBlend
 
 
 
-            //build each line individually (partially, the art/sound/engine/ location name is still $name$)
-
+            //build each line into an "array" (more like a custom list) partially, the blend name is still $name$
+            //and load sounds 
             int arrayIndexOnL = 0;
             int arrayIndexOffL = 0;
+
 
             try
             {
@@ -63,10 +64,7 @@ namespace Sound2sfxBlend
             catch (Exception ex)
             {
                 MainWindow.progressDialogue.UpdateProgressText("Error loading sound! " + ex.Message);
-
                 MessageBox.Show("Failed loading sounds! You might have provided an invalid path name.", "Failed loading sounds!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
             }
 
             onlist.Sort(delegate (SFile x, SFile y) { return x.SoundRPM.CompareTo(y.SoundRPM); });
@@ -75,7 +73,6 @@ namespace Sound2sfxBlend
             //build lines into a complete block
             string onloadSoundOutput = null;
             string offloadSoundOutput = null;
-
 
             try
             {
@@ -94,7 +91,7 @@ namespace Sound2sfxBlend
                     onloadSoundOutput = onloadSoundOutput.Replace("$name$", blendName);
                     MainWindow.progressDialogue.UpdateProgressText("Built onload line " + aLine.ToString().Replace("$name$", blendName));
                 }
-
+                //for some reason this mf keeps throwing an exception even though it's in a try catch
                 offloadSoundOutput = offloadSoundOutput.Remove(offloadSoundOutput.Length - 3);
                 onloadSoundOutput = onloadSoundOutput.Remove(onloadSoundOutput.Length - 3);
             }
@@ -103,8 +100,8 @@ namespace Sound2sfxBlend
                 MainWindow.progressDialogue.UpdateProgressText("Error building blend! " + ex.Message);
                 MessageBox.Show("Failed building blend file! You might have provided an invalid path name.", "Failed building blend file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            //create json
-
+            
+            //load the built lines of code into a string and make it complete
             string templateBase = null;
 
             bool botherMakingASEBfolder = true;
@@ -119,16 +116,15 @@ namespace Sound2sfxBlend
             {
                 botherMakingASEBfolder = false;
                 MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
 
+            //create json
 
             System.IO.StreamWriter streamWriter = null;
 
             bool botherMovingFiles = false;
             if (botherMakingASEBfolder == true) {
                 botherMovingFiles = true;
-
                 try
                 {
                     System.IO.Directory.CreateDirectory(outputFolder + "/art/sound/blends");
@@ -145,16 +141,14 @@ namespace Sound2sfxBlend
                 }
             }         
 
-
+            //move or copy (depending on the user's choice) sound files over to the new location
             if (botherMovingFiles==true){
                 if (MainWindow.copyRatherThanMove == true)
                 {
                     foreach (string x in System.IO.Directory.GetFiles(soundPath))
                     {
                         string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-
                         System.IO.File.Copy(x, outputFolder + "/art/sound/engine/" + blendName + @"\" + shN);
-
                     }
                 }
                 else
@@ -162,9 +156,7 @@ namespace Sound2sfxBlend
                     foreach (string x in System.IO.Directory.GetFiles(soundPath))
                     {
                         string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-
                         System.IO.File.Move(x, outputFolder + "/art/sound/engine/" + blendName + @"\" + shN);
-
                     }
                 }
             }

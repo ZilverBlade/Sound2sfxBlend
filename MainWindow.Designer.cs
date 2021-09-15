@@ -404,7 +404,7 @@ namespace Sound2sfxBlend
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainWindow";
-            this.Text = "Beamng | Sound > sfxBlend2D converter";
+            this.Text = "Sound2sfxBlend2D";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -48,7 +48,6 @@ namespace Sound2sfxBlend
 
         public void AllowToBeClosed()
         {
-   
             button1.Enabled = true;
             this.Text = "Finished creating sfxBlend2D file!";
             builderProcessDialogueLbl.Text = "Finished creation";
