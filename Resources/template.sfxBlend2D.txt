@@ -1,0 +1,15 @@
+{
+    "header" : {
+        "version" : 1
+    },
+    "eventName" : "event:>Engine>default",
+    "samples" : 
+    [
+        [
+           $replacementstringforoffloadsouds$
+        ],
+        [
+           $replacementstringforonloadsouds$
+        ]
+    ]
+}

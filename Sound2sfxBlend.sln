@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sound2sfxBlend", "Sound2sfxBlend.csproj", "{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Debug|x86.ActiveCfg = Debug|x86
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Debug|x86.Build.0 = Debug|x86
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Release|x86.ActiveCfg = Release|x86
+		{9BEBBB0D-6DFF-4D66-8EE8-985C5CB5416B}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {EAD4C4A8-ACD1-4E6F-8E58-BA78F349A431}
+	EndGlobalSection
+EndGlobal
