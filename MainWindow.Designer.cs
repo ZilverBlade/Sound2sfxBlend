@@ -201,6 +201,7 @@ namespace Sound2sfxBlend
             this.label3.TabIndex = 5;
             this.label3.Text = "WARNING! This tool will look for any numbers and use them as RPM values\r\nIf you w" +
     "ant to avoid this potential issue, make use of the ignore characters above\r\n";
+            this.label3.Visible = false;
             // 
             // comboBox2
             // 

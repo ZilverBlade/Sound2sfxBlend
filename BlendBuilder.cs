@@ -126,7 +126,7 @@ namespace Sound2sfxBlend
             System.IO.StreamWriter streamWriter = null;
 
             bool botherMovingFiles = false;
-            if (botherMakingASEBfolder == false) {
+            if (botherMakingASEBfolder == true) {
                 botherMovingFiles = true;
 
                 try
