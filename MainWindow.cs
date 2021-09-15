@@ -11,11 +11,11 @@ using Sound2sfxBlend;
 namespace Sound2sfxBlend
 {
 
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         public static BlendBuildingProgessDialogue progressDialogue;
         public static bool copyRatherThanMove = false;
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
 
@@ -96,24 +96,45 @@ namespace Sound2sfxBlend
             checkIfRulesAreEmpty();
         }
 
+        private void blendNameTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            checkIfRulesAreEmpty();
+            blendNameTxtBox.Text = Regex.Replace(blendNameTxtBox.Text, @"[^\w\.@-]", "");
+        }
+        private void outputFolderTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            checkIfRulesAreEmpty();
+        }
+        private void soundFolderTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            checkIfRulesAreEmpty();
+        }
+
         void checkIfRulesAreEmpty()
         {
-            if (onLoadRulesTxtBox.Text != "")
+            if (blendNameTxtBox.Text != "" && soundFolderTxtBox.Text != "" && outputFolderTxtBox.Text != "")
             {
-                //toolTip1.SetToolTip(label12, null);
-                button1.Enabled = true;
-            }
-            else if (offLoadRulesTxtBox.Text != "")
-            {
-                //toolTip1.SetToolTip(label12, null);
-                button1.Enabled = true;
+                if (onLoadRulesTxtBox.Text != "")
+                {
+                    //toolTip1.SetToolTip(label12, null);
+                    button1.Enabled = true;
+                }
+                else if (offLoadRulesTxtBox.Text != "")
+                {
+                    //toolTip1.SetToolTip(label12, null);
+                    button1.Enabled = true;
+                }
+                else
+                {
+                    //toolTip1.SetToolTip(button1, "You need to add a rule!");
+                    button1.Enabled = false;
+                }
             }
             else
             {
-                //toolTip1.SetToolTip(button1, "You need to add a rule!");
                 button1.Enabled = false;
+                
             }
-
             if (onLoadRulesTxtBox.Text != "" && offLoadRulesTxtBox.Text == "")
             {
                 label11.Text = "Since there is no offload rule, offload will be using files that do not match onload's rules";
@@ -135,15 +156,7 @@ namespace Sound2sfxBlend
 
         }
 
-        private void blendNameTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            blendNameTxtBox.Text = Regex.Replace(blendNameTxtBox.Text, @"[^\w\.@-]", "");
-        }
 
-        private void outputFolderTxtBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -171,5 +184,7 @@ namespace Sound2sfxBlend
                 outputFolderTxtBox.Text = outputFolderBrowserDialog.SelectedPath;
             }
         }
+
+       
     }
 }

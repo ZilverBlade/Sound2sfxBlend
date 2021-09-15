@@ -1,7 +1,7 @@
 ﻿
 namespace Sound2sfxBlend
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -46,6 +46,8 @@ namespace Sound2sfxBlend
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.OutputFldr = new System.Windows.Forms.Button();
@@ -58,8 +60,6 @@ namespace Sound2sfxBlend
             this.label8 = new System.Windows.Forms.Label();
             this.blendNameTxtBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.soundFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.outputFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
@@ -261,6 +261,27 @@ namespace Sound2sfxBlend
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Files and Location";
             // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(297, 197);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(28, 22);
+            this.button4.TabIndex = 25;
+            this.button4.Text = "?";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(7, 200);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(178, 17);
+            this.checkBox1.TabIndex = 24;
+            this.checkBox1.Text = "Copy files over rather than move";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(232, 80);
@@ -326,6 +347,7 @@ namespace Sound2sfxBlend
             this.soundFolderTxtBox.Name = "soundFolderTxtBox";
             this.soundFolderTxtBox.Size = new System.Drawing.Size(148, 20);
             this.soundFolderTxtBox.TabIndex = 17;
+            this.soundFolderTxtBox.TextChanged += new System.EventHandler(this.soundFolderTxtBox_TextChanged);
             // 
             // label9
             // 
@@ -370,28 +392,7 @@ namespace Sound2sfxBlend
             this.label12.TabIndex = 4;
             this.label12.Text = "x";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 200);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(178, 17);
-            this.checkBox1.TabIndex = 24;
-            this.checkBox1.Text = "Copy files over rather than move";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // button4
-            // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(297, 197);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(28, 22);
-            this.button4.TabIndex = 25;
-            this.button4.Text = "?";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -401,7 +402,7 @@ namespace Sound2sfxBlend
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "Beamng | Sound > sfxBlend2D converter";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
