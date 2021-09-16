@@ -8,6 +8,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Sound2sfxBlend;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+
 namespace Sound2sfxBlend
 {
 
@@ -16,6 +21,7 @@ namespace Sound2sfxBlend
         public static BlendBuildingProgessDialogue progressDialogue;
         public static bool copyRatherThanMove = false;
         public static bool busyBuilding = false;
+        public static bool onloadIsAlsoOffload = false;
 
         public MainWindow()
         {
@@ -47,11 +53,11 @@ namespace Sound2sfxBlend
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             button1.Enabled = false;
             bool isAllowedToBuild = true;
             busyBuilding = true;
             timer1.Start();
-
             BlendBuilder blendBuilder = new BlendBuilder();
 
             progressDialogue = new BlendBuildingProgessDialogue();
@@ -115,17 +121,18 @@ namespace Sound2sfxBlend
             {
                 if (onLoadRulesTxtBox.Text != "")
                 {
-                    //toolTip1.SetToolTip(label12, null);
                     button1.Enabled = true;
                 }
                 else if (offLoadRulesTxtBox.Text != "")
+                {                  
+                    button1.Enabled = true;
+                }
+                else if (checkBox2.Checked == true)
                 {
-                    //toolTip1.SetToolTip(label12, null);
                     button1.Enabled = true;
                 }
                 else
                 {
-                    //toolTip1.SetToolTip(button1, "You need to add a rule!");
                     button1.Enabled = false;
                 }
             }
@@ -152,7 +159,10 @@ namespace Sound2sfxBlend
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = "Sound2sfxBlend2D " + Application.ProductVersion;
+            //displays correct ASSEMBLY version (not file version)
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+            this.Text = "Sound2sfxBlend2D " + typeof(MainWindow).Assembly.GetName().Version.Major + "." + typeof(MainWindow).Assembly.GetName().Version.Minor + "." + typeof(MainWindow).Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1) ;       
         }
 
 
@@ -182,6 +192,21 @@ namespace Sound2sfxBlend
             {
                 outputFolderTxtBox.Text = outputFolderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked == true)
+            {
+                groupBox1.Enabled = false;
+                onloadIsAlsoOffload = true;
+            }
+            else
+            {
+                groupBox1.Enabled = true;
+                onloadIsAlsoOffload = false;
+            }        
+            checkIfRulesAreEmpty();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
