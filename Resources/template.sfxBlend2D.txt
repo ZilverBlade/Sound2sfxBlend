@@ -6,10 +6,10 @@
     "samples" : 
     [
         [
-           $replacementstringforoffloadsounds$
+           $replacementstringforoffloadsouds$
         ],
         [
-           $replacementstringforonloadsounds$
+           $replacementstringforonloadsouds$
         ]
     ]
 }

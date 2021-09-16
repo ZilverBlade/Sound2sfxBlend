@@ -29,6 +29,7 @@ namespace Sound2sfxBlend
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -62,7 +63,7 @@ namespace Sound2sfxBlend
             this.label12 = new System.Windows.Forms.Label();
             this.soundFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.outputFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -92,6 +93,12 @@ namespace Sound2sfxBlend
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.numericUpDown2);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.offLoadRulesTxtBox);
             this.groupBox1.Controls.Add(this.onLoadRulesTxtBox);
             this.groupBox1.Controls.Add(this.label3);
@@ -101,7 +108,7 @@ namespace Sound2sfxBlend
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(349, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(409, 151);
+            this.groupBox1.Size = new System.Drawing.Size(409, 225);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rules";
@@ -111,7 +118,7 @@ namespace Sound2sfxBlend
             this.label11.ForeColor = System.Drawing.Color.Red;
             this.label11.Location = new System.Drawing.Point(191, 103);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(212, 40);
+            this.label11.Size = new System.Drawing.Size(212, 49);
             this.label11.TabIndex = 14;
             this.label11.Text = "Since there is no <onload/offload> rule, <onload/offload> will be using files tha" +
     "t do not match <offload/offload>\'s rules";
@@ -120,7 +127,7 @@ namespace Sound2sfxBlend
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(447, 197);
+            this.label6.Location = new System.Drawing.Point(115, 134);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 13;
@@ -129,7 +136,7 @@ namespace Sound2sfxBlend
             // numericUpDown2
             // 
             this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(411, 195);
+            this.numericUpDown2.Location = new System.Drawing.Point(79, 132);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(30, 20);
             this.numericUpDown2.TabIndex = 12;
@@ -137,7 +144,7 @@ namespace Sound2sfxBlend
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(349, 197);
+            this.label7.Location = new System.Drawing.Point(17, 134);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 11;
@@ -146,7 +153,7 @@ namespace Sound2sfxBlend
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(447, 171);
+            this.label5.Location = new System.Drawing.Point(115, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 10;
@@ -155,7 +162,7 @@ namespace Sound2sfxBlend
             // numericUpDown1
             // 
             this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(411, 169);
+            this.numericUpDown1.Location = new System.Drawing.Point(79, 106);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(30, 20);
             this.numericUpDown1.TabIndex = 9;
@@ -163,7 +170,7 @@ namespace Sound2sfxBlend
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(349, 171);
+            this.label4.Location = new System.Drawing.Point(17, 108);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 8;
@@ -190,7 +197,7 @@ namespace Sound2sfxBlend
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(6, 168);
+            this.label3.Location = new System.Drawing.Point(6, 187);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(389, 26);
             this.label3.TabIndex = 5;
@@ -388,33 +395,20 @@ namespace Sound2sfxBlend
             this.label12.TabIndex = 4;
             this.label12.Text = "x";
             // 
-            // checkBox2
+            // timer1
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(350, 219);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(217, 17);
-            this.checkBox2.TabIndex = 15;
-            this.checkBox2.Text = "Onload and offload are the same sounds";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 290);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainWindow";
             this.Text = "Sound2sfxBlend2D";
@@ -431,8 +425,6 @@ namespace Sound2sfxBlend
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboBox1;
@@ -465,7 +457,8 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.FolderBrowserDialog soundFolderBrowserDialog;
         private System.Windows.Forms.FolderBrowserDialog outputFolderBrowserDialog;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

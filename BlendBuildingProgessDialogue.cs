@@ -20,6 +20,7 @@ namespace Sound2sfxBlend
         {
             progressBar1.Maximum = IllegalBlendNames.illegalNames.Count();
             textBox1.MaxLength = int.MaxValue;
+            this.TopMost = true;
         }
 
         public void UpdateProgressText(string newLog)
@@ -63,6 +64,7 @@ namespace Sound2sfxBlend
                 streamWriter.Flush();
                 streamWriter.Close();
             }
+            MainWindow.busyBuilding = false;
             this.Close();
         }
     }

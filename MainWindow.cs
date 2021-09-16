@@ -15,7 +15,7 @@ namespace Sound2sfxBlend
     {
         public static BlendBuildingProgessDialogue progressDialogue;
         public static bool copyRatherThanMove = false;
-        public static bool onloadIsAlsoOffload = false;
+        public static bool busyBuilding = false;
 
         public MainWindow()
         {
@@ -47,13 +47,10 @@ namespace Sound2sfxBlend
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
-            if (blendNameTxtBox.Text.Contains(""))
-            {
-
-            }
-
+            button1.Enabled = false;
             bool isAllowedToBuild = true;
+            busyBuilding = true;
+            timer1.Start();
 
             BlendBuilder blendBuilder = new BlendBuilder();
 
@@ -118,18 +115,17 @@ namespace Sound2sfxBlend
             {
                 if (onLoadRulesTxtBox.Text != "")
                 {
+                    //toolTip1.SetToolTip(label12, null);
                     button1.Enabled = true;
                 }
                 else if (offLoadRulesTxtBox.Text != "")
-                {                  
-                    button1.Enabled = true;
-                }
-                else if (checkBox2.Checked == true)
                 {
+                    //toolTip1.SetToolTip(label12, null);
                     button1.Enabled = true;
                 }
                 else
                 {
+                    //toolTip1.SetToolTip(button1, "You need to add a rule!");
                     button1.Enabled = false;
                 }
             }
@@ -188,19 +184,17 @@ namespace Sound2sfxBlend
             }
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            if (checkBox2.Checked == true)
+            if (busyBuilding == true)
             {
-                groupBox1.Enabled = false;
-                onloadIsAlsoOffload = true;
+                button1.Enabled = false;
             }
             else
             {
-                groupBox1.Enabled = true;
-                onloadIsAlsoOffload = false;
+                button1.Enabled = true;
+                timer1.Stop();
             }
-            checkIfRulesAreEmpty();
         }
     }
 }
