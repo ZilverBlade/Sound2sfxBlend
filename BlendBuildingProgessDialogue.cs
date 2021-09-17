@@ -11,6 +11,8 @@ namespace Sound2sfxBlend
 {
     public partial class BlendBuildingProgessDialogue : Form
     {
+        public string exportedPath;
+
         public BlendBuildingProgessDialogue()
         {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace Sound2sfxBlend
         public void AllowToBeClosed()
         {
             button1.Enabled = true;
+            button2.Enabled = true;
             this.Text = "Finished creating sfxBlend2D file!";
             builderProcessDialogueLbl.Text = "Finished creation";
             progressBar1.Style = ProgressBarStyle.Blocks;
@@ -66,6 +69,11 @@ namespace Sound2sfxBlend
             }
             MainWindow.busyBuilding = false;
             this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(exportedPath);
         }
     }
 }

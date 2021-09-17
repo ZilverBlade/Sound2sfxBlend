@@ -24,7 +24,6 @@ namespace Sound2sfxBlend
             return cleaned;
         }
 
-
         //Custom Resizable Array
         List<SFile> onlist = new List<SFile>();
         List<SFile> offlist = new List<SFile>();
@@ -33,131 +32,37 @@ namespace Sound2sfxBlend
         int arrayIndexOnL = 0;
         int arrayIndexOffL = 0;
 
+        string blendName;
+        string soundPath;
+        string outputFolder;
+        string onLoadRule;
+        string offLoadRule;
+        string templateBase;
 
-        public void BuildBlend(string blendName, string soundPath, string outputFolder, string onLoadRule, string offLoadRule)
+        bool botherMakingASEBfolder = true;
+        bool botherMovingFiles = false;
+
+        public void BuildBlend(string bName, string sPath, string outFolder, string onLRule, string offLRule)
         {
-
+            blendName = bName;
+            soundPath = sPath;
+            outputFolder = outFolder;
+            onLoadRule = onLRule;
+            offLoadRule = offLRule;
 
             if (MainWindow.onloadIsAlsoOffload == false)
             {
-                BuildBlendWithOnloadOffload(soundPath, onLoadRule, offLoadRule);
-                FinaliseBlend(blendName, soundPath, outputFolder, onLoadRule, offLoadRule);
+                BuildBlendWithOnloadOffload();
+                FinaliseBlend();
             }
             else
             {
-                BuildUnifiedBlend(blendName, soundPath, outputFolder, onLoadRule, offLoadRule);
+                BuildUnifiedBlend();
             }
            
         }
-
-        private void BuildUnifiedBlend(string blendName, string soundPath, string outputFolder, string onLoadRule, string offLoadRule)
-        {
-            try
-            {
-                foreach (string x in System.IO.Directory.GetFiles(soundPath))
-                {
-                    string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-                    int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(shN.Remove(shN.LastIndexOf(".") + 1)));
-                    onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
-                    MainWindow.progressDialogue.UpdateProgressText("Loaded sound " + onlist[arrayIndexOnL]);
-                    arrayIndexOnL += 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                MainWindow.progressDialogue.UpdateProgressText("Error loading sound! " + ex.Message);
-                MessageBox.Show("Failed loading sounds! You might have provided an invalid path name.", "Failed loading sounds!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            onlist.Sort(delegate (SFile x, SFile y) { return x.SoundRPM.CompareTo(y.SoundRPM); });          
-
-            //build lines into a complete block
-            string onloadSoundOutput = null;
-            try
-            {
-               
-                foreach (SFile aLine in onlist)
-                {
-                    onloadSoundOutput += aLine;
-                    onloadSoundOutput += System.Environment.NewLine;
-                    onloadSoundOutput = onloadSoundOutput.Replace("$name$", blendName);
-                    MainWindow.progressDialogue.UpdateProgressText("Built onload line " + aLine.ToString().Replace("$name$", blendName));
-                }
-                //for some reason this mf keeps throwing an exception even though it's in a try catch              
-                onloadSoundOutput = onloadSoundOutput.Remove(onloadSoundOutput.Length - 3);
-            }
-            catch (Exception ex)
-            {
-                MainWindow.progressDialogue.UpdateProgressText("Error building blend! " + ex.Message);
-                MessageBox.Show("Failed building blend file! You might have provided an invalid path name.", "Failed building blend file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //load the built lines of code into a string and make it complete
-            string templateBase = null;
-
-            bool botherMakingASEBfolder = true;
-
-            try
-            {
-                templateBase = Properties.Resources.template_sfxBlend2D.ToString();
-                
-                templateBase = templateBase.Replace("$replacementstringforonloadsounds$", onloadSoundOutput);
-                templateBase = templateBase.Replace("$replacementstringforoffloadsounds$", onloadSoundOutput);
-            }
-            catch
-            {
-                botherMakingASEBfolder = false;
-                MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //create json
-
-            System.IO.StreamWriter streamWriter = null;
-
-            bool botherMovingFiles = false;
-            if (botherMakingASEBfolder == true)
-            {
-                botherMovingFiles = true;
-                try
-                {
-                    System.IO.Directory.CreateDirectory(outputFolder + "/art/sound/blends");
-                    System.IO.Directory.CreateDirectory(outputFolder + "/art/sound/engine/" + blendName);
-                    streamWriter = new System.IO.StreamWriter(outputFolder + "/art/sound/blends/" + blendName + ".sfxBlend2D.json");
-                    streamWriter.Write(templateBase);
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                }
-                catch
-                {
-                    botherMovingFiles = false;
-                    MessageBox.Show("No access to path! Please choose a different folder.", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-            //move or copy (depending on the user's choice) sound files over to the new location
-            if (botherMovingFiles == true)
-            {
-                if (MainWindow.copyRatherThanMove == true)
-                {
-                    foreach (string x in System.IO.Directory.GetFiles(soundPath))
-                    {
-                        string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-                        System.IO.File.Copy(x, outputFolder + "/art/sound/engine/" + blendName + @"\" + shN);
-                    }
-                }
-                else
-                {
-                    foreach (string x in System.IO.Directory.GetFiles(soundPath))
-                    {
-                        string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-                        System.IO.File.Move(x, outputFolder + "/art/sound/engine/" + blendName + @"\" + shN);
-                    }
-                }
-            }
-
-            MainWindow.progressDialogue.AllowToBeClosed();
-        }
-
-        private void BuildBlendWithOnloadOffload(string soundPath, string onLoadRule, string offLoadRule)
+        
+        private void BuildBlendWithOnloadOffload()
         {
             try
             {               
@@ -189,7 +94,7 @@ namespace Sound2sfxBlend
             }
         }
 
-        private void FinaliseBlend(string blendName, string soundPath, string outputFolder, string onLoadRule, string offLoadRule)
+        private void FinaliseBlend()
         {
             onlist.Sort(delegate (SFile x, SFile y) { return x.SoundRPM.CompareTo(y.SoundRPM); });
             offlist.Sort(delegate (SFile x, SFile y) { return x.SoundRPM.CompareTo(y.SoundRPM); });
@@ -226,9 +131,6 @@ namespace Sound2sfxBlend
             }
 
             //load the built lines of code into a string and make it complete
-            string templateBase = null;
-
-            bool botherMakingASEBfolder = true;
 
             try
             {
@@ -242,11 +144,15 @@ namespace Sound2sfxBlend
                 MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            FinishBlend(templateBase);
+        }
+
+
+
+        private void FinishBlend(string builtBlend)
+        {
             //create json
-
             System.IO.StreamWriter streamWriter = null;
-
-            bool botherMovingFiles = false;
             if (botherMakingASEBfolder == true)
             {
                 botherMovingFiles = true;
@@ -255,7 +161,7 @@ namespace Sound2sfxBlend
                     System.IO.Directory.CreateDirectory(outputFolder + "/art/sound/blends");
                     System.IO.Directory.CreateDirectory(outputFolder + "/art/sound/engine/" + blendName);
                     streamWriter = new System.IO.StreamWriter(outputFolder + "/art/sound/blends/" + blendName + ".sfxBlend2D.json");
-                    streamWriter.Write(templateBase);
+                    streamWriter.Write(builtBlend);
                     streamWriter.Flush();
                     streamWriter.Close();
                 }
@@ -287,7 +193,70 @@ namespace Sound2sfxBlend
                 }
             }
 
+            MainWindow.progressDialogue.exportedPath = outputFolder + @"\art";
+            MainWindow.progressDialogue.UpdateProgressText("Successfully created sound blend \"" + blendName + "\" in "+ outputFolder);
             MainWindow.progressDialogue.AllowToBeClosed();
+        }
+
+
+        private void BuildUnifiedBlend()
+        {
+            try
+            {
+                foreach (string x in System.IO.Directory.GetFiles(soundPath))
+                {
+                    string shN = x.Substring(x.LastIndexOf(@"\") + 1);
+                    int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(shN.Remove(shN.LastIndexOf(".") + 1)));
+                    onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
+                    MainWindow.progressDialogue.UpdateProgressText("Loaded sound " + onlist[arrayIndexOnL]);
+                    arrayIndexOnL += 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                MainWindow.progressDialogue.UpdateProgressText("Error loading sound! " + ex.Message);
+                MessageBox.Show("Failed loading sounds! You might have provided an invalid path name.", "Failed loading sounds!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            onlist.Sort(delegate (SFile x, SFile y) { return x.SoundRPM.CompareTo(y.SoundRPM); });
+
+            //build lines into a complete block
+            string onloadSoundOutput = null;
+            try
+            {
+
+                foreach (SFile aLine in onlist)
+                {
+                    onloadSoundOutput += aLine;
+                    onloadSoundOutput += System.Environment.NewLine;
+                    onloadSoundOutput = onloadSoundOutput.Replace("$name$", blendName);
+                    MainWindow.progressDialogue.UpdateProgressText("Built onload line " + aLine.ToString().Replace("$name$", blendName));
+                }
+                //for some reason this mf keeps throwing an exception even though it's in a try catch              
+                onloadSoundOutput = onloadSoundOutput.Remove(onloadSoundOutput.Length - 3);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.progressDialogue.UpdateProgressText("Error building blend! " + ex.Message);
+                MessageBox.Show("Failed building blend file! You might have provided an invalid path name.", "Failed building blend file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //load the built lines of code into a string and make it complete
+            string templateBase = null;
+
+            try
+            {
+                templateBase = Properties.Resources.template_sfxBlend2D.ToString();
+
+                templateBase = templateBase.Replace("$replacementstringforonloadsounds$", onloadSoundOutput);
+                templateBase = templateBase.Replace("$replacementstringforoffloadsounds$", onloadSoundOutput);
+            }
+            catch
+            {
+                botherMakingASEBfolder = false;
+                MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            FinishBlend(templateBase);
         }
 
 
