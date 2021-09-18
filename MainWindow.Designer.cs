@@ -65,16 +65,25 @@ namespace Sound2sfxBlend
             this.outputFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkAutomaticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beamNGForumPostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.youtubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdateAsync = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(313, 243);
+            this.button1.Location = new System.Drawing.Point(313, 265);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 36);
             this.button1.TabIndex = 0;
@@ -101,7 +110,7 @@ namespace Sound2sfxBlend
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(349, 12);
+            this.groupBox1.Location = new System.Drawing.Point(349, 34);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(409, 151);
             this.groupBox1.TabIndex = 2;
@@ -188,7 +197,7 @@ namespace Sound2sfxBlend
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(447, 197);
+            this.label6.Location = new System.Drawing.Point(447, 219);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 13;
@@ -197,7 +206,7 @@ namespace Sound2sfxBlend
             // numericUpDown2
             // 
             this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(411, 195);
+            this.numericUpDown2.Location = new System.Drawing.Point(411, 217);
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(30, 20);
             this.numericUpDown2.TabIndex = 12;
@@ -205,7 +214,7 @@ namespace Sound2sfxBlend
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(349, 197);
+            this.label7.Location = new System.Drawing.Point(349, 219);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 11;
@@ -214,7 +223,7 @@ namespace Sound2sfxBlend
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(447, 171);
+            this.label5.Location = new System.Drawing.Point(447, 193);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 10;
@@ -223,7 +232,7 @@ namespace Sound2sfxBlend
             // numericUpDown1
             // 
             this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(411, 169);
+            this.numericUpDown1.Location = new System.Drawing.Point(411, 191);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(30, 20);
             this.numericUpDown1.TabIndex = 9;
@@ -231,7 +240,7 @@ namespace Sound2sfxBlend
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(349, 171);
+            this.label4.Location = new System.Drawing.Point(349, 193);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 8;
@@ -252,7 +261,7 @@ namespace Sound2sfxBlend
             this.groupBox2.Controls.Add(this.outputFolderTxtBox);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.blendNameTxtBox);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 34);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(331, 225);
             this.groupBox2.TabIndex = 3;
@@ -393,7 +402,7 @@ namespace Sound2sfxBlend
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(350, 219);
+            this.checkBox2.Location = new System.Drawing.Point(350, 241);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(217, 17);
             this.checkBox2.TabIndex = 15;
@@ -406,11 +415,76 @@ namespace Sound2sfxBlend
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.githubToolStripMenuItem,
+            this.beamNGForumPostToolStripMenuItem,
+            this.youtubeVideoToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(770, 24);
+            this.menuStrip1.TabIndex = 16;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkAutomaticallyToolStripMenuItem,
+            this.checkNowToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 20);
+            this.toolStripMenuItem1.Text = "Check for updates";
+            // 
+            // checkAutomaticallyToolStripMenuItem
+            // 
+            this.checkAutomaticallyToolStripMenuItem.Checked = true;
+            this.checkAutomaticallyToolStripMenuItem.CheckOnClick = true;
+            this.checkAutomaticallyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAutomaticallyToolStripMenuItem.Name = "checkAutomaticallyToolStripMenuItem";
+            this.checkAutomaticallyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.checkAutomaticallyToolStripMenuItem.Text = "Check Automatically";
+            this.checkAutomaticallyToolStripMenuItem.CheckedChanged += new System.EventHandler(this.checkAutomaticallyToolStripMenuItem_CheckedChanged);
+            // 
+            // checkNowToolStripMenuItem
+            // 
+            this.checkNowToolStripMenuItem.Name = "checkNowToolStripMenuItem";
+            this.checkNowToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.checkNowToolStripMenuItem.Text = "Check Now";
+            this.checkNowToolStripMenuItem.Click += new System.EventHandler(this.checkNowToolStripMenuItem_Click);
+            // 
+            // githubToolStripMenuItem
+            // 
+            this.githubToolStripMenuItem.Name = "githubToolStripMenuItem";
+            this.githubToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.githubToolStripMenuItem.Text = "Github";
+            this.githubToolStripMenuItem.Click += new System.EventHandler(this.githubToolStripMenuItem_Click);
+            // 
+            // beamNGForumPostToolStripMenuItem
+            // 
+            this.beamNGForumPostToolStripMenuItem.Name = "beamNGForumPostToolStripMenuItem";
+            this.beamNGForumPostToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.beamNGForumPostToolStripMenuItem.Text = "BeamNG Forum Post";
+            this.beamNGForumPostToolStripMenuItem.Click += new System.EventHandler(this.beamNGForumPostToolStripMenuItem_Click);
+            // 
+            // youtubeVideoToolStripMenuItem
+            // 
+            this.youtubeVideoToolStripMenuItem.Name = "youtubeVideoToolStripMenuItem";
+            this.youtubeVideoToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
+            this.youtubeVideoToolStripMenuItem.Text = "Youtube Video";
+            this.youtubeVideoToolStripMenuItem.Click += new System.EventHandler(this.youtubeVideoToolStripMenuItem_Click);
+            // 
+            // checkForUpdateAsync
+            // 
+            this.checkForUpdateAsync.DoWork += new System.ComponentModel.DoWorkEventHandler(this.checkForUpdateAsync_DoWork);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 290);
+            this.ClientSize = new System.Drawing.Size(770, 311);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label12);
@@ -422,7 +496,9 @@ namespace Sound2sfxBlend
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "Sound2sfxBlend2D";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -432,6 +508,8 @@ namespace Sound2sfxBlend
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,6 +552,14 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.FolderBrowserDialog outputFolderBrowserDialog;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem githubToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem beamNGForumPostToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem youtubeVideoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkAutomaticallyToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker checkForUpdateAsync;
+        private System.Windows.Forms.ToolStripMenuItem checkNowToolStripMenuItem;
     }
 }
 

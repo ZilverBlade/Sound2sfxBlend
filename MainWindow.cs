@@ -12,12 +12,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Net;
 
 namespace Sound2sfxBlend
 {
 
     public partial class MainWindow : Form
     {
+       
         public static BlendBuildingProgessDialogue progressDialogue;
         public static bool copyRatherThanMove = false;
         public static bool busyBuilding = false;
@@ -162,10 +164,50 @@ namespace Sound2sfxBlend
             //displays correct ASSEMBLY version (not file version)
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
-            this.Text = "Sound2sfxBlend2D " + typeof(MainWindow).Assembly.GetName().Version.Major + "." + typeof(MainWindow).Assembly.GetName().Version.Minor + "." + typeof(MainWindow).Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1) ;       
+            Type type1 = typeof(MainWindow);
+            this.Text = "Sound2sfxBlend2D " + type1.Assembly.GetName().Version.Major + "." + type1.Assembly.GetName().Version.Minor + "." + type1.Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1) ;
+
+            if (Properties.Settings.Default.autoCheckForUpdates == true) { checkForUpdateAsync.RunWorkerAsync(); } else { checkAutomaticallyToolStripMenuItem.Checked = false; }
         }
 
+        private void checkForUpdateAsync_DoWork(object sender, DoWorkEventArgs e)
+        {
+            CheckVersion();
+        }
 
+        private void CheckVersion(bool ranManually = false)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    string v = client.DownloadString("https://pastebin.com/raw/XATmg05m");
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+                    string getversion = v.Substring(v.IndexOf("$") + 1, v.LastIndexOf("$") - v.IndexOf("$") - 1);
+                    Type type1 = typeof(MainWindow);
+
+                    if (Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
+                    {
+                        MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update");
+                    }
+                    else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
+                    {
+                        MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        System.Diagnostics.Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+                    }
+                    else if (ranManually == true)
+                    {
+                        MessageBox.Show("You're already on the latest version", $"Version {type1.Assembly.GetName().Version.Major + "." + type1.Assembly.GetName().Version.Minor + "." + type1.Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1)}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("An error occured while checking for update. Are you connected to the internet?", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -221,5 +263,27 @@ namespace Sound2sfxBlend
                 timer1.Stop();
             }
         }
+
+
+        private void checkAutomaticallyToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkAutomaticallyToolStripMenuItem.Checked==true)
+            {
+                Properties.Settings.Default.autoCheckForUpdates = true;
+            }
+            else
+            {
+                Properties.Settings.Default.autoCheckForUpdates = false;
+            }
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkNowToolStripMenuItem_Click(object sender, EventArgs e) => CheckVersion(true);
+
+        private void githubToolStripMenuItem_Click(object sender, EventArgs e) => System.Diagnostics.Process.Start("https://github.com/ZilverBlade/Sound2sfxBlend/releases");
+        
+        private void beamNGForumPostToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.beamng.com/threads/sound-blend-file-creator-sfxblend2d-tool.81891/");
+
+        private void youtubeVideoToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=NWBxAukX_vg");
     }
 }

@@ -45,8 +45,7 @@ namespace Sound2sfxBlend
             else
             {
                 progressBar1.Style = ProgressBarStyle.Blocks;
-            }
-            
+            }            
         }
 
         public void AllowToBeClosed()
@@ -62,7 +61,7 @@ namespace Sound2sfxBlend
         {
             if (checkBox1.Checked == true)
             {              
-                System.IO.StreamWriter streamWriter = new System.IO.StreamWriter( Application.StartupPath + @"\" + DateTime.Now.ToString().Replace(":", "-") + "_sfxblend2dexportlog.txt");
+                System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(Application.StartupPath + @"\" + DateTime.Now.ToString().Replace(":", "-") + "_sfxblend2dexportlog.txt");
                 streamWriter.Write(textBox1.Text);
                 streamWriter.Flush();
                 streamWriter.Close();
