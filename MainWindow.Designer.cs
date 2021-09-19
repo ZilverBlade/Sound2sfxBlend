@@ -47,7 +47,7 @@ namespace Sound2sfxBlend
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.hlpCopyNotMove = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -248,7 +248,7 @@ namespace Sound2sfxBlend
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.hlpCopyNotMove);
             this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.button3);
@@ -268,15 +268,15 @@ namespace Sound2sfxBlend
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Files and Location";
             // 
-            // button4
+            // hlpCopyNotMove
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(297, 197);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(28, 22);
-            this.button4.TabIndex = 25;
-            this.button4.Text = "?";
-            this.button4.UseVisualStyleBackColor = true;
+            this.hlpCopyNotMove.Location = new System.Drawing.Point(297, 197);
+            this.hlpCopyNotMove.Name = "hlpCopyNotMove";
+            this.hlpCopyNotMove.Size = new System.Drawing.Size(28, 22);
+            this.hlpCopyNotMove.TabIndex = 25;
+            this.hlpCopyNotMove.Text = "?";
+            this.hlpCopyNotMove.UseVisualStyleBackColor = true;
+            this.hlpCopyNotMove.Click += new System.EventHandler(this.hlpCopyNotMove_Click);
             // 
             // checkBox1
             // 
@@ -547,7 +547,7 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button hlpCopyNotMove;
         private System.Windows.Forms.FolderBrowserDialog soundFolderBrowserDialog;
         private System.Windows.Forms.FolderBrowserDialog outputFolderBrowserDialog;
         private System.Windows.Forms.CheckBox checkBox2;

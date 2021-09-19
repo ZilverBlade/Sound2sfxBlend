@@ -32,25 +32,14 @@ namespace Sound2sfxBlend
         }
 
         #region help buttons
-        private void hlpBlendName_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is the name that you give to your sound, make sure it's something unique, as it could overwrite other sounds unintentionally", "Blend Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        private void hlpBlendName_Click(object sender, EventArgs e) => MessageBox.Show("This is the name that you give to your sound, make sure it's something unique, as it could overwrite other sounds unintentionally", "Blend Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpSoundFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder with all of your sounds. Select the folder and you're good to go.", "Sound Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void OutputFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder where your created sound blend is put in.", "Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpOnLoad_Click(object sender, EventArgs e) => MessageBox.Show("help", "On load", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpOffLoad_Click(object sender, EventArgs e) =>MessageBox.Show("help", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpCopyNotMove_Click(object sender, EventArgs e) => MessageBox.Show("If you check this, rather than moving the sounds from your sound folder, it copies them over, preventing them from being moved around and such.", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-        private void hlpSoundFldr_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is the folder with all of your sounds. Select the folder and you're good to go.", "Sound Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
-        private void OutputFldr_Click(object sender, EventArgs e) {
-            MessageBox.Show("This is the folder where your created sound blend is put in.", "Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void hlpOnLoad_Click(object sender, EventArgs e) {
-            MessageBox.Show("help", "On load", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void hlpOffLoad_Click(object sender, EventArgs e) {
-            MessageBox.Show("help", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
         #endregion
 
         private void button1_Click(object sender, EventArgs e)
@@ -73,7 +62,7 @@ namespace Sound2sfxBlend
                     isAllowedToBuild = false;
                     progressDialogue.UpdateProgressText("Colliding blend name found: " + IllegalBlendNames.illegalNames[i]);
                     progressDialogue.UpdateProgressText("Cancelling blend creation...");
-                    MessageBox.Show("You used a default BeamNG.drive blend name: " + System.Environment.NewLine + IllegalBlendNames.illegalNames[i] + System.Environment.NewLine + "Please change your blend name", "Illegal Blend Name Used!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("You used a default BeamNG.drive blend name: " + Environment.NewLine + IllegalBlendNames.illegalNames[i] + Environment.NewLine + "Please change your blend name", "Illegal Blend Name Used!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     progressDialogue.Close();
                     break;
                 }
@@ -162,7 +151,7 @@ namespace Sound2sfxBlend
         private void Form1_Load(object sender, EventArgs e)
         {
             //displays correct ASSEMBLY version (not file version)
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
             Type type1 = typeof(MainWindow);
             this.Text = "Sound2sfxBlend2D " + type1.Assembly.GetName().Version.Major + "." + type1.Assembly.GetName().Version.Minor + "." + type1.Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1) ;
@@ -182,19 +171,24 @@ namespace Sound2sfxBlend
                 using (WebClient client = new WebClient())
                 {
                     string v = client.DownloadString("https://pastebin.com/raw/XATmg05m");
-                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    Assembly assembly = Assembly.GetExecutingAssembly();
                     FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
                     string getversion = v.Substring(v.IndexOf("$") + 1, v.LastIndexOf("$") - v.IndexOf("$") - 1);
                     Type type1 = typeof(MainWindow);
 
                     if (Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
                     {
-                        MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update");
+                        if (MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update") == DialogResult.Yes)
+                        {
+                            Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+                        }
                     }
                     else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
                     {
-                        MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        System.Diagnostics.Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+                        if (MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        {
+                            Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+                        }
                     }
                     else if (ranManually == true)
                     {
@@ -214,7 +208,8 @@ namespace Sound2sfxBlend
             if (checkBox1.Checked == true)
             {
                 copyRatherThanMove = true;
-            }else
+            }
+            else
             {
                 copyRatherThanMove = false;
             }
@@ -280,10 +275,12 @@ namespace Sound2sfxBlend
 
         private void checkNowToolStripMenuItem_Click(object sender, EventArgs e) => CheckVersion(true);
 
-        private void githubToolStripMenuItem_Click(object sender, EventArgs e) => System.Diagnostics.Process.Start("https://github.com/ZilverBlade/Sound2sfxBlend/releases");
+        private void githubToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://github.com/ZilverBlade/Sound2sfxBlend/releases");
         
         private void beamNGForumPostToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.beamng.com/threads/sound-blend-file-creator-sfxblend2d-tool.81891/");
 
         private void youtubeVideoToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=NWBxAukX_vg");
+
+
     }
 }
