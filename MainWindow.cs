@@ -183,7 +183,7 @@ namespace Sound2sfxBlend
                             Process.Start(v.Substring(v.LastIndexOf("$") + 1));
                         }
                     }
-                    else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
+                    else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) >= type1.Assembly.GetName().Version.Minor)
                     {
                         if (MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
@@ -281,6 +281,9 @@ namespace Sound2sfxBlend
 
         private void youtubeVideoToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=NWBxAukX_vg");
 
+        private void checkAutomaticallyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

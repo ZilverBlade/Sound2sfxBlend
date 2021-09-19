@@ -447,6 +447,7 @@ namespace Sound2sfxBlend
             this.checkAutomaticallyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.checkAutomaticallyToolStripMenuItem.Text = "Check Automatically";
             this.checkAutomaticallyToolStripMenuItem.CheckedChanged += new System.EventHandler(this.checkAutomaticallyToolStripMenuItem_CheckedChanged);
+            this.checkAutomaticallyToolStripMenuItem.Click += new System.EventHandler(this.checkAutomaticallyToolStripMenuItem_Click);
             // 
             // checkNowToolStripMenuItem
             // 
