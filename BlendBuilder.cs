@@ -37,18 +37,23 @@ namespace Sound2sfxBlend
         string outputFolder;
         string onLoadRule;
         string offLoadRule;
+        int ignore1stChar;
+        int ignoreLastChar;
+
         string templateBase;
 
         bool botherMakingASEBfolder = true;
         bool botherMovingFiles = false;
 
-        public void BuildBlend(string bName, string sPath, string outFolder, string onLRule, string offLRule)
+        public void BuildBlend(string bName, string sPath, string outFolder, string onLRule, string offLRule, int ign1stChar, int ignlstChar)
         {
             blendName = bName;
             soundPath = sPath;
             outputFolder = outFolder;
             onLoadRule = onLRule;
             offLoadRule = offLRule;
+            ignore1stChar = ign1stChar;
+            ignoreLastChar = ignlstChar;
 
             if (MainWindow.onloadIsAlsoOffload == false)
             {
@@ -73,16 +78,20 @@ namespace Sound2sfxBlend
                     string shN = x.Substring(x.LastIndexOf(@"\") + 1);
                     if (shN.Contains(onLoadRule))
                     {
-                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(shN.Remove(shN.LastIndexOf(".") + 1)));
+                        string cutShN = shN.Remove(shN.LastIndexOf("."));
+                        cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
+                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
                         onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
-                        MainWindow.progressDialogue.UpdateProgressText("Loaded sound " + onlist[arrayIndexOnL]);
+                        MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {onlist[arrayIndexOnL]} at rpm {onlyNrShN}");
                         arrayIndexOnL += 1;
                     }
                     else
                     {
-                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(shN));
+                        string cutShN = shN.Remove(shN.LastIndexOf("."));
+                        cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
+                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
                         offlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
-                        MainWindow.progressDialogue.UpdateProgressText("Loaded sound " + offlist[arrayIndexOffL]);
+                        MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {offlist[arrayIndexOffL]} at rpm {onlyNrShN}");
                         arrayIndexOffL += 1;
                     }
                 }

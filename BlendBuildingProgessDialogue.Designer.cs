@@ -56,6 +56,7 @@ namespace Sound2sfxBlend
             this.textBox1.Size = new System.Drawing.Size(360, 82);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "started building sfx2d blend for beamng with name:";
+            this.textBox1.WordWrap = false;
             // 
             // builderProcessDialogueLbl
             // 

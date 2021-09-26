@@ -33,6 +33,7 @@ namespace Sound2sfxBlend
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.hlpOnLoad = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.offLoadRulesTxtBox = new System.Windows.Forms.TextBox();
             this.onLoadRulesTxtBox = new System.Windows.Forms.TextBox();
@@ -41,10 +42,10 @@ namespace Sound2sfxBlend
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.ignoreLastCharsNumUD = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.ignoreFirstCharsNumUD = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.hlpCopyNotMove = new System.Windows.Forms.Button();
@@ -73,9 +74,10 @@ namespace Sound2sfxBlend
             this.beamNGForumPostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.youtubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateAsync = new System.ComponentModel.BackgroundWorker();
+            this.sampleFileNameLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ignoreLastCharsNumUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ignoreFirstCharsNumUD)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +104,7 @@ namespace Sound2sfxBlend
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.hlpOnLoad);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.offLoadRulesTxtBox);
             this.groupBox1.Controls.Add(this.onLoadRulesTxtBox);
@@ -116,6 +119,16 @@ namespace Sound2sfxBlend
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rules";
+            // 
+            // hlpOnLoad
+            // 
+            this.hlpOnLoad.Location = new System.Drawing.Point(377, 36);
+            this.hlpOnLoad.Name = "hlpOnLoad";
+            this.hlpOnLoad.Size = new System.Drawing.Size(28, 22);
+            this.hlpOnLoad.TabIndex = 26;
+            this.hlpOnLoad.Text = "?";
+            this.hlpOnLoad.UseVisualStyleBackColor = true;
+            this.hlpOnLoad.Click += new System.EventHandler(this.hlpOnLoad_Click);
             // 
             // label11
             // 
@@ -141,7 +154,7 @@ namespace Sound2sfxBlend
             // 
             this.onLoadRulesTxtBox.Location = new System.Drawing.Point(194, 37);
             this.onLoadRulesTxtBox.Name = "onLoadRulesTxtBox";
-            this.onLoadRulesTxtBox.Size = new System.Drawing.Size(209, 20);
+            this.onLoadRulesTxtBox.Size = new System.Drawing.Size(179, 20);
             this.onLoadRulesTxtBox.TabIndex = 6;
             this.onLoadRulesTxtBox.TextChanged += new System.EventHandler(this.onLoadRulesTxtBox_TextChanged);
             // 
@@ -203,13 +216,13 @@ namespace Sound2sfxBlend
             this.label6.TabIndex = 13;
             this.label6.Text = "characters";
             // 
-            // numericUpDown2
+            // ignoreLastCharsNumUD
             // 
-            this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Location = new System.Drawing.Point(411, 217);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(30, 20);
-            this.numericUpDown2.TabIndex = 12;
+            this.ignoreLastCharsNumUD.Location = new System.Drawing.Point(411, 217);
+            this.ignoreLastCharsNumUD.Name = "ignoreLastCharsNumUD";
+            this.ignoreLastCharsNumUD.Size = new System.Drawing.Size(30, 20);
+            this.ignoreLastCharsNumUD.TabIndex = 12;
+            this.ignoreLastCharsNumUD.ValueChanged += new System.EventHandler(this.ignoreLastCharsNumUD_ValueChanged);
             // 
             // label7
             // 
@@ -229,13 +242,13 @@ namespace Sound2sfxBlend
             this.label5.TabIndex = 10;
             this.label5.Text = "characters";
             // 
-            // numericUpDown1
+            // ignoreFirstCharsNumUD
             // 
-            this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(411, 191);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(30, 20);
-            this.numericUpDown1.TabIndex = 9;
+            this.ignoreFirstCharsNumUD.Location = new System.Drawing.Point(411, 191);
+            this.ignoreFirstCharsNumUD.Name = "ignoreFirstCharsNumUD";
+            this.ignoreFirstCharsNumUD.Size = new System.Drawing.Size(30, 20);
+            this.ignoreFirstCharsNumUD.TabIndex = 9;
+            this.ignoreFirstCharsNumUD.ValueChanged += new System.EventHandler(this.ignoreFirstCharsNumUD_ValueChanged);
             // 
             // label4
             // 
@@ -446,8 +459,6 @@ namespace Sound2sfxBlend
             this.checkAutomaticallyToolStripMenuItem.Name = "checkAutomaticallyToolStripMenuItem";
             this.checkAutomaticallyToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.checkAutomaticallyToolStripMenuItem.Text = "Check Automatically";
-            this.checkAutomaticallyToolStripMenuItem.CheckedChanged += new System.EventHandler(this.checkAutomaticallyToolStripMenuItem_CheckedChanged);
-            this.checkAutomaticallyToolStripMenuItem.Click += new System.EventHandler(this.checkAutomaticallyToolStripMenuItem_Click);
             // 
             // checkNowToolStripMenuItem
             // 
@@ -481,20 +492,30 @@ namespace Sound2sfxBlend
             // 
             this.checkForUpdateAsync.DoWork += new System.ComponentModel.DoWorkEventHandler(this.checkForUpdateAsync_DoWork);
             // 
+            // sampleFileNameLbl
+            // 
+            this.sampleFileNameLbl.AutoSize = true;
+            this.sampleFileNameLbl.Location = new System.Drawing.Point(526, 219);
+            this.sampleFileNameLbl.Name = "sampleFileNameLbl";
+            this.sampleFileNameLbl.Size = new System.Drawing.Size(45, 13);
+            this.sampleFileNameLbl.TabIndex = 17;
+            this.sampleFileNameLbl.Text = "Sample:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 311);
+            this.Controls.Add(this.sampleFileNameLbl);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.numericUpDown2);
+            this.Controls.Add(this.ignoreLastCharsNumUD);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.ignoreFirstCharsNumUD);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.menuStrip1);
@@ -505,8 +526,8 @@ namespace Sound2sfxBlend
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ignoreLastCharsNumUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ignoreFirstCharsNumUD)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -523,10 +544,10 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown ignoreLastCharsNumUD;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown ignoreFirstCharsNumUD;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox offLoadRulesTxtBox;
         private System.Windows.Forms.TextBox onLoadRulesTxtBox;
@@ -561,6 +582,8 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.ToolStripMenuItem checkAutomaticallyToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker checkForUpdateAsync;
         private System.Windows.Forms.ToolStripMenuItem checkNowToolStripMenuItem;
+        private System.Windows.Forms.Label sampleFileNameLbl;
+        private System.Windows.Forms.Button hlpOnLoad;
     }
 }
 

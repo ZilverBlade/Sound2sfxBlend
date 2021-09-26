@@ -26,11 +26,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_AssemblyInfoFilename = Properties\AssemblyInfo.cs
-		BuildVersion_ReplaceNonNumerics = False
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {EAD4C4A8-ACD1-4E6F-8E58-BA78F349A431}
+		BuildVersion_StartDate = 2000/1/1
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_ReplaceNonNumerics = False
+		BuildVersion_AssemblyInfoFilename = Properties\AssemblyInfo.cs
 	EndGlobalSection
 EndGlobal

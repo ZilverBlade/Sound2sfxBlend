@@ -35,7 +35,7 @@ namespace Sound2sfxBlend
         private void hlpBlendName_Click(object sender, EventArgs e) => MessageBox.Show("This is the name that you give to your sound, make sure it's something unique, as it could overwrite other sounds unintentionally", "Blend Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpSoundFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder with all of your sounds. Select the folder and you're good to go.", "Sound Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void OutputFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder where your created sound blend is put in.", "Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void hlpOnLoad_Click(object sender, EventArgs e) => MessageBox.Show("help", "On load", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpOnLoad_Click(object sender, EventArgs e) => MessageBox.Show("This is the text or character that is present on sound files that are for onload. Example: \"5000_ON.flac\" is an onload file, so you type in ON for the onload textbox", "On load", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpOffLoad_Click(object sender, EventArgs e) =>MessageBox.Show("help", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpCopyNotMove_Click(object sender, EventArgs e) => MessageBox.Show("If you check this, rather than moving the sounds from your sound folder, it copies them over, preventing them from being moved around and such.", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -76,7 +76,7 @@ namespace Sound2sfxBlend
             if (isAllowedToBuild == true)
             {
                 progressDialogue.UpdateProgressBar(true);
-                blendBuilder.BuildBlend(blendNameTxtBox.Text, soundFolderTxtBox.Text, outputFolderTxtBox.Text, onLoadRulesTxtBox.Text, offLoadRulesTxtBox.Text);
+                blendBuilder.BuildBlend(blendNameTxtBox.Text, soundFolderTxtBox.Text, outputFolderTxtBox.Text, onLoadRulesTxtBox.Text, offLoadRulesTxtBox.Text, Convert.ToInt32(ignoreFirstCharsNumUD.Value), Convert.ToInt32(ignoreLastCharsNumUD.Value));
             }
             
         }
@@ -104,6 +104,7 @@ namespace Sound2sfxBlend
         private void soundFolderTxtBox_TextChanged(object sender, EventArgs e)
         {
             checkIfRulesAreEmpty();
+            UpdateSample();
         }
 
         void checkIfRulesAreEmpty()
@@ -203,7 +204,23 @@ namespace Sound2sfxBlend
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void UpdateSample()
+        {
+            try
+            {
+                string x = System.IO.Directory.GetFiles(soundFolderTxtBox.Text)[0];
+
+                var samplename = x.Substring(x.LastIndexOf(@"\") + 1);
+                samplename = samplename.Remove(samplename.LastIndexOf("."));
+                var samplenameext = x.Substring(x.LastIndexOf("."));
+                samplename = samplename.Substring((int)ignoreFirstCharsNumUD.Value);
+                samplename = samplename.Substring(0, samplename.Length - (int)ignoreLastCharsNumUD.Value);
+                sampleFileNameLbl.Text = $"Sample: {samplename + samplenameext}";
+            }
+            catch { }
+           
+        }
+            private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)
             {
@@ -281,9 +298,9 @@ namespace Sound2sfxBlend
 
         private void youtubeVideoToolStripMenuItem_Click(object sender, EventArgs e) => Process.Start("https://www.youtube.com/watch?v=NWBxAukX_vg");
 
-        private void checkAutomaticallyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void ignoreFirstCharsNumUD_ValueChanged(object sender, EventArgs e) => UpdateSample();
 
-        }
+        private void ignoreLastCharsNumUD_ValueChanged(object sender, EventArgs e) => UpdateSample();
+
     }
 }

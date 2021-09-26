@@ -59,25 +59,6 @@ namespace Sound2sfxBlend.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {
-        ///    &quot;header&quot; : {
-        ///        &quot;version&quot; : 1
-        ///    },
-        ///    &quot;eventName&quot; : &quot;event:&gt;Engine&gt;default&quot;,
-        ///    &quot;samples&quot; : 
-        ///    [
-        ///        [
-        ///           $replacementstringforoffloadsouds$
-        ///        ],
-        ///        [
-        ///           $replacementstringforonloadsouds$
-        ///        ]
-        ///    ]
-        ///}
-        ///.
-        /// </summary>
         internal static string template_sfxBlend2D {
             get {
                 return ResourceManager.GetString("template.sfxBlend2D", resourceCulture);
