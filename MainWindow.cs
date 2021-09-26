@@ -179,7 +179,7 @@ namespace Sound2sfxBlend
 
                     if (Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
                     {
-                        if (MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update") == DialogResult.Yes)
+                        if (MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                         {
                             Process.Start(v.Substring(v.LastIndexOf("$") + 1));
                         }
