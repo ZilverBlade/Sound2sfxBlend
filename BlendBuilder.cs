@@ -63,16 +63,14 @@ namespace Sound2sfxBlend
             else
             {
                 BuildUnifiedBlend();
-            }
-           
+            }       
         }
         
         private void BuildBlendWithOnloadOffload()
         {
             try
             {               
-                //build each line into an "array" (more like a custom list) partially, the blend name is still $name$ and load sounds 
-                    
+                //build each line into an "array" (more like a custom list) partially, the blend name is still $name$ and load sounds                    
                 foreach (string x in System.IO.Directory.GetFiles(soundPath))
                 {
                     string shN = x.Substring(x.LastIndexOf(@"\") + 1);
@@ -152,11 +150,8 @@ namespace Sound2sfxBlend
                 botherMakingASEBfolder = false;
                 MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
             FinishBlend(templateBase);
         }
-
-
 
         private void FinishBlend(string builtBlend)
         {
@@ -201,12 +196,10 @@ namespace Sound2sfxBlend
                     }
                 }
             }
-
             MainWindow.progressDialogue.exportedPath = outputFolder + @"\art";
             MainWindow.progressDialogue.UpdateProgressText("Successfully created sound blend \"" + blendName + "\" in "+ outputFolder);
             MainWindow.progressDialogue.AllowToBeClosed();
         }
-
 
         private void BuildUnifiedBlend()
         {
@@ -215,9 +208,11 @@ namespace Sound2sfxBlend
                 foreach (string x in System.IO.Directory.GetFiles(soundPath))
                 {
                     string shN = x.Substring(x.LastIndexOf(@"\") + 1);
-                    int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(shN.Remove(shN.LastIndexOf(".") + 1)));
+                    string cutShN = shN.Remove(shN.LastIndexOf("."));
+                    cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
+                    int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
                     onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
-                    MainWindow.progressDialogue.UpdateProgressText("Loaded sound " + onlist[arrayIndexOnL]);
+                    MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {onlist[arrayIndexOnL]} at rpm {onlyNrShN}");
                     arrayIndexOnL += 1;
                 }
             }
@@ -251,7 +246,6 @@ namespace Sound2sfxBlend
 
             //load the built lines of code into a string and make it complete
             string templateBase = null;
-
             try
             {
                 templateBase = Properties.Resources.template_sfxBlend2D.ToString();
@@ -264,11 +258,8 @@ namespace Sound2sfxBlend
                 botherMakingASEBfolder = false;
                 MessageBox.Show("Template file missing! Try reinstalling the program if this issue persists", "Critial error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
             FinishBlend(templateBase);
         }
-
-
     }
 }
 
