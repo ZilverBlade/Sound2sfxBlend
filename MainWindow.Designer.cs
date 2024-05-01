@@ -37,10 +37,12 @@ namespace Sound2sfxBlend
             this.label11 = new System.Windows.Forms.Label();
             this.offLoadRulesTxtBox = new System.Windows.Forms.TextBox();
             this.onLoadRulesTxtBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.ignoreLastCharsNumUD = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -75,17 +77,24 @@ namespace Sound2sfxBlend
             this.youtubeVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateAsync = new System.ComponentModel.BackgroundWorker();
             this.sampleFileNameLbl = new System.Windows.Forms.Label();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.hlpCustomRPMRangeMapping = new System.Windows.Forms.Button();
+            this.hlpOnloadIsAlsoOffloat = new System.Windows.Forms.Button();
+            this.rpmRangeMinNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.rpmRangeMaxNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ignoreLastCharsNumUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ignoreFirstCharsNumUD)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpmRangeMinNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpmRangeMaxNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(313, 265);
+            this.button1.Location = new System.Drawing.Point(12, 345);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 36);
             this.button1.TabIndex = 0;
@@ -108,14 +117,13 @@ namespace Sound2sfxBlend
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.offLoadRulesTxtBox);
             this.groupBox1.Controls.Add(this.onLoadRulesTxtBox);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(349, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(409, 151);
+            this.groupBox1.Size = new System.Drawing.Size(409, 154);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rules";
@@ -158,18 +166,6 @@ namespace Sound2sfxBlend
             this.onLoadRulesTxtBox.TabIndex = 6;
             this.onLoadRulesTxtBox.TextChanged += new System.EventHandler(this.onLoadRulesTxtBox_TextChanged);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(6, 168);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(389, 26);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "WARNING! This tool will look for any numbers and use them as RPM values\r\nIf you w" +
-    "ant to avoid this potential issue, make use of the ignore characters above\r\n";
-            this.label3.Visible = false;
-            // 
             // comboBox2
             // 
             this.comboBox2.Enabled = false;
@@ -207,10 +203,40 @@ namespace Sound2sfxBlend
             this.comboBox1.TabIndex = 2;
             this.comboBox1.Text = "Contains";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(366, 227);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(54, 13);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "Max RPM";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(369, 207);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Min RPM";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(349, 345);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(389, 26);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "WARNING! This tool will look for any numbers and use them as RPM values\r\nIf you w" +
+    "ant to avoid this potential issue, make use of the ignore characters above\r\n";
+            this.label3.Visible = false;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(447, 219);
+            this.label6.Location = new System.Drawing.Point(447, 292);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 13;
@@ -218,7 +244,7 @@ namespace Sound2sfxBlend
             // 
             // ignoreLastCharsNumUD
             // 
-            this.ignoreLastCharsNumUD.Location = new System.Drawing.Point(411, 217);
+            this.ignoreLastCharsNumUD.Location = new System.Drawing.Point(411, 290);
             this.ignoreLastCharsNumUD.Name = "ignoreLastCharsNumUD";
             this.ignoreLastCharsNumUD.Size = new System.Drawing.Size(30, 20);
             this.ignoreLastCharsNumUD.TabIndex = 12;
@@ -227,7 +253,7 @@ namespace Sound2sfxBlend
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(349, 219);
+            this.label7.Location = new System.Drawing.Point(349, 292);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
             this.label7.TabIndex = 11;
@@ -236,7 +262,7 @@ namespace Sound2sfxBlend
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(447, 193);
+            this.label5.Location = new System.Drawing.Point(447, 266);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 10;
@@ -244,7 +270,7 @@ namespace Sound2sfxBlend
             // 
             // ignoreFirstCharsNumUD
             // 
-            this.ignoreFirstCharsNumUD.Location = new System.Drawing.Point(411, 191);
+            this.ignoreFirstCharsNumUD.Location = new System.Drawing.Point(411, 264);
             this.ignoreFirstCharsNumUD.Name = "ignoreFirstCharsNumUD";
             this.ignoreFirstCharsNumUD.Size = new System.Drawing.Size(30, 20);
             this.ignoreFirstCharsNumUD.TabIndex = 9;
@@ -253,7 +279,7 @@ namespace Sound2sfxBlend
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(349, 193);
+            this.label4.Location = new System.Drawing.Point(349, 266);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 8;
@@ -276,14 +302,14 @@ namespace Sound2sfxBlend
             this.groupBox2.Controls.Add(this.blendNameTxtBox);
             this.groupBox2.Location = new System.Drawing.Point(12, 34);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(331, 225);
+            this.groupBox2.Size = new System.Drawing.Size(331, 305);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Files and Location";
             // 
             // hlpCopyNotMove
             // 
-            this.hlpCopyNotMove.Location = new System.Drawing.Point(297, 197);
+            this.hlpCopyNotMove.Location = new System.Drawing.Point(296, 279);
             this.hlpCopyNotMove.Name = "hlpCopyNotMove";
             this.hlpCopyNotMove.Size = new System.Drawing.Size(28, 22);
             this.hlpCopyNotMove.TabIndex = 25;
@@ -294,7 +320,7 @@ namespace Sound2sfxBlend
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 200);
+            this.checkBox1.Location = new System.Drawing.Point(6, 282);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(178, 17);
             this.checkBox1.TabIndex = 24;
@@ -415,7 +441,7 @@ namespace Sound2sfxBlend
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(350, 241);
+            this.checkBox2.Location = new System.Drawing.Point(350, 314);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(217, 17);
             this.checkBox2.TabIndex = 15;
@@ -447,6 +473,7 @@ namespace Sound2sfxBlend
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkAutomaticallyToolStripMenuItem,
             this.checkNowToolStripMenuItem});
+            this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 20);
             this.toolStripMenuItem1.Text = "Check for updates";
@@ -495,21 +522,86 @@ namespace Sound2sfxBlend
             // sampleFileNameLbl
             // 
             this.sampleFileNameLbl.AutoSize = true;
-            this.sampleFileNameLbl.Location = new System.Drawing.Point(526, 219);
+            this.sampleFileNameLbl.Location = new System.Drawing.Point(526, 292);
             this.sampleFileNameLbl.Name = "sampleFileNameLbl";
             this.sampleFileNameLbl.Size = new System.Drawing.Size(45, 13);
             this.sampleFileNameLbl.TabIndex = 17;
             this.sampleFileNameLbl.Text = "Sample:";
             // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(599, 314);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(123, 17);
+            this.checkBox3.TabIndex = 18;
+            this.checkBox3.Text = "Override RPM range";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // hlpCustomRPMRangeMapping
+            // 
+            this.hlpCustomRPMRangeMapping.Location = new System.Drawing.Point(724, 311);
+            this.hlpCustomRPMRangeMapping.Name = "hlpCustomRPMRangeMapping";
+            this.hlpCustomRPMRangeMapping.Size = new System.Drawing.Size(28, 22);
+            this.hlpCustomRPMRangeMapping.TabIndex = 26;
+            this.hlpCustomRPMRangeMapping.Text = "?";
+            this.hlpCustomRPMRangeMapping.UseVisualStyleBackColor = true;
+            this.hlpCustomRPMRangeMapping.Click += new System.EventHandler(this.hlpCustomRPMRangeMapping_Click);
+            // 
+            // hlpOnloadIsAlsoOffloat
+            // 
+            this.hlpOnloadIsAlsoOffloat.Location = new System.Drawing.Point(562, 312);
+            this.hlpOnloadIsAlsoOffloat.Name = "hlpOnloadIsAlsoOffloat";
+            this.hlpOnloadIsAlsoOffloat.Size = new System.Drawing.Size(28, 22);
+            this.hlpOnloadIsAlsoOffloat.TabIndex = 27;
+            this.hlpOnloadIsAlsoOffloat.Text = "?";
+            this.hlpOnloadIsAlsoOffloat.UseVisualStyleBackColor = true;
+            this.hlpOnloadIsAlsoOffloat.Click += new System.EventHandler(this.hlpOnloadIsAlsoOffloat_Click);
+            // 
+            // rpmRangeMinNumericUpDown
+            // 
+            this.rpmRangeMinNumericUpDown.Enabled = false;
+            this.rpmRangeMinNumericUpDown.Location = new System.Drawing.Point(426, 205);
+            this.rpmRangeMinNumericUpDown.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.rpmRangeMinNumericUpDown.Name = "rpmRangeMinNumericUpDown";
+            this.rpmRangeMinNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.rpmRangeMinNumericUpDown.TabIndex = 27;
+            // 
+            // rpmRangeMaxNumericUpDown
+            // 
+            this.rpmRangeMaxNumericUpDown.Enabled = false;
+            this.rpmRangeMaxNumericUpDown.Location = new System.Drawing.Point(426, 225);
+            this.rpmRangeMaxNumericUpDown.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.rpmRangeMaxNumericUpDown.Name = "rpmRangeMaxNumericUpDown";
+            this.rpmRangeMaxNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.rpmRangeMaxNumericUpDown.TabIndex = 27;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 311);
+            this.ClientSize = new System.Drawing.Size(770, 393);
+            this.Controls.Add(this.rpmRangeMinNumericUpDown);
+            this.Controls.Add(this.rpmRangeMaxNumericUpDown);
+            this.Controls.Add(this.hlpOnloadIsAlsoOffloat);
+            this.Controls.Add(this.hlpCustomRPMRangeMapping);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.sampleFileNameLbl);
             this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.ignoreLastCharsNumUD);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label7);
@@ -532,6 +624,8 @@ namespace Sound2sfxBlend
             this.groupBox2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rpmRangeMinNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpmRangeMaxNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -584,6 +678,13 @@ namespace Sound2sfxBlend
         private System.Windows.Forms.ToolStripMenuItem checkNowToolStripMenuItem;
         private System.Windows.Forms.Label sampleFileNameLbl;
         private System.Windows.Forms.Button hlpOnLoad;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Button hlpCustomRPMRangeMapping;
+        private System.Windows.Forms.Button hlpOnloadIsAlsoOffloat;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown rpmRangeMaxNumericUpDown;
+        private System.Windows.Forms.NumericUpDown rpmRangeMinNumericUpDown;
     }
 }
 

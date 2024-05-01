@@ -9,6 +9,8 @@ namespace Sound2sfxBlend
     
     public class BlendBuilder
     {
+
+
         string CleanStringOfNonDigits_V6(string s)
         {
             if (string.IsNullOrEmpty(s)) return s;
@@ -40,12 +42,28 @@ namespace Sound2sfxBlend
         int ignore1stChar;
         int ignoreLastChar;
 
+        int rpmOverrideRangeMin;
+        int rpmOverrideRangeMax;
+
+        int maxReadRPMRange = -Int32.MaxValue;
+        int minReadRPMRange = Int32.MaxValue;
+
         string templateBase;
 
         bool botherMakingASEBfolder = true;
         bool botherMovingFiles = false;
 
-        public void BuildBlend(string bName, string sPath, string outFolder, string onLRule, string offLRule, int ign1stChar, int ignlstChar)
+        int getRPMValue(int scale) {
+            if (MainWindow.overrideRPMRange) {
+                float percentage = (float)scale / (float)(maxReadRPMRange - minReadRPMRange) - (float)minReadRPMRange;
+                return (int)(percentage * rpmOverrideRangeMax + (1.0 - percentage) * rpmOverrideRangeMin);
+            } else {
+                return scale;
+            }
+        }
+
+
+        public void BuildBlend(string bName, string sPath, string outFolder, string onLRule, string offLRule, int ign1stChar, int ignlstChar, int ovrRevRPMMin, int ovrRevRPMMax)
         {
             blendName = bName;
             soundPath = sPath;
@@ -54,6 +72,8 @@ namespace Sound2sfxBlend
             offLoadRule = offLRule;
             ignore1stChar = ign1stChar;
             ignoreLastChar = ignlstChar;
+            rpmOverrideRangeMin = ovrRevRPMMin;
+            rpmOverrideRangeMax = ovrRevRPMMax;
 
             if (MainWindow.onloadIsAlsoOffload == false)
             {
@@ -69,16 +89,25 @@ namespace Sound2sfxBlend
         private void BuildBlendWithOnloadOffload()
         {
             try
-            {               
+            {
+                foreach (string x in System.IO.Directory.GetFiles(soundPath)) {
+                    string shN = x.Substring(x.LastIndexOf(@"\") + 1);
+                    string cutShN = shN.Remove(shN.LastIndexOf("."));
+                    cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
+                    int v = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
+                    maxReadRPMRange = Math.Max(maxReadRPMRange, v);
+                    minReadRPMRange = Math.Min(minReadRPMRange, v);
+                }
                 //build each line into an "array" (more like a custom list) partially, the blend name is still $name$ and load sounds                    
                 foreach (string x in System.IO.Directory.GetFiles(soundPath))
                 {
+                    //change this to not read the extention
                     string shN = x.Substring(x.LastIndexOf(@"\") + 1);
                     if (shN.Contains(onLoadRule))
                     {
                         string cutShN = shN.Remove(shN.LastIndexOf("."));
                         cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
-                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
+                        int onlyNrShN = getRPMValue(Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN)));
                         onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
                         MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {onlist[arrayIndexOnL]} at rpm {onlyNrShN}");
                         arrayIndexOnL += 1;
@@ -87,7 +116,7 @@ namespace Sound2sfxBlend
                     {
                         string cutShN = shN.Remove(shN.LastIndexOf("."));
                         cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
-                        int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
+                        int onlyNrShN = getRPMValue(Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN)));
                         offlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
                         MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {offlist[arrayIndexOffL]} at rpm {onlyNrShN}");
                         arrayIndexOffL += 1;
@@ -205,12 +234,20 @@ namespace Sound2sfxBlend
         {
             try
             {
+                foreach (string x in System.IO.Directory.GetFiles(soundPath)) {
+                    string shN = x.Substring(x.LastIndexOf(@"\") + 1);
+                    string cutShN = shN.Remove(shN.LastIndexOf("."));
+                    cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
+                    int v = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
+                    maxReadRPMRange = Math.Max(maxReadRPMRange, v);
+                    minReadRPMRange = Math.Min(minReadRPMRange, v);
+                }
                 foreach (string x in System.IO.Directory.GetFiles(soundPath))
                 {
                     string shN = x.Substring(x.LastIndexOf(@"\") + 1);
                     string cutShN = shN.Remove(shN.LastIndexOf("."));
                     cutShN = cutShN.Substring(ignore1stChar, cutShN.Length - ignore1stChar - ignoreLastChar);
-                    int onlyNrShN = Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN));
+                    int onlyNrShN = getRPMValue(Convert.ToInt32(CleanStringOfNonDigits_V6(cutShN)));
                     onlist.Add(new SFile() { SoundName = shN, SoundRPM = onlyNrShN });
                     MainWindow.progressDialogue.UpdateProgressText($"Loaded sound {onlist[arrayIndexOnL]} at rpm {onlyNrShN}");
                     arrayIndexOnL += 1;

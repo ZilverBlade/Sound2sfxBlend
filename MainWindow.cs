@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Net;
 
 namespace Sound2sfxBlend
 {
@@ -24,6 +23,7 @@ namespace Sound2sfxBlend
         public static bool copyRatherThanMove = false;
         public static bool busyBuilding = false;
         public static bool onloadIsAlsoOffload = false;
+        public static bool overrideRPMRange = false;
 
         public MainWindow()
         {
@@ -34,11 +34,12 @@ namespace Sound2sfxBlend
         #region help buttons
         private void hlpBlendName_Click(object sender, EventArgs e) => MessageBox.Show("This is the name that you give to your sound, make sure it's something unique, as it could overwrite other sounds unintentionally", "Blend Name", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpSoundFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder with all of your sounds. Select the folder and you're good to go.", "Sound Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void OutputFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder where your created sound blend is put in.", "Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void OutputFldr_Click(object sender, EventArgs e) => MessageBox.Show("This is the folder where your created 'art' folder is put in.", "Output Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpOnLoad_Click(object sender, EventArgs e) => MessageBox.Show("This is the text or character that is present on sound files that are for onload. Example: \"5000_ON.flac\" is an onload file, so you type in ON for the onload textbox", "On load", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        private void hlpOffLoad_Click(object sender, EventArgs e) =>MessageBox.Show("help", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpOffLoad_Click(object sender, EventArgs e) => MessageBox.Show("help", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
         private void hlpCopyNotMove_Click(object sender, EventArgs e) => MessageBox.Show("If you check this, rather than moving the sounds from your sound folder, it copies them over, preventing them from being moved around and such.", "Off load", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+        private void hlpOnloadIsAlsoOffloat_Click(object sender, EventArgs e) => MessageBox.Show("If you check this, the generated blend file will consider your off-load sound to be the on-load sound samples.", "Onload sfx == Offload sfx", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void hlpCustomRPMRangeMapping_Click(object sender, EventArgs e) => MessageBox.Show("If you check this, you may select a custom range of RPM that the samples correlate to.\nThis is useful in cases where the sound samples are named by an incremental number, and no real RPM is retrievable from the file names.\nThis option is typically not used, however some sound samples require manual RPM range mapping.", "Override RPM range", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         #endregion
 
@@ -76,7 +77,17 @@ namespace Sound2sfxBlend
             if (isAllowedToBuild == true)
             {
                 progressDialogue.UpdateProgressBar(true);
-                blendBuilder.BuildBlend(blendNameTxtBox.Text, soundFolderTxtBox.Text, outputFolderTxtBox.Text, onLoadRulesTxtBox.Text, offLoadRulesTxtBox.Text, Convert.ToInt32(ignoreFirstCharsNumUD.Value), Convert.ToInt32(ignoreLastCharsNumUD.Value));
+                blendBuilder.BuildBlend(
+                    blendNameTxtBox.Text, 
+                    soundFolderTxtBox.Text, 
+                    outputFolderTxtBox.Text,
+                    onLoadRulesTxtBox.Text, 
+                    offLoadRulesTxtBox.Text,
+                    Convert.ToInt32(ignoreFirstCharsNumUD.Value), 
+                    Convert.ToInt32(ignoreLastCharsNumUD.Value),
+                    (int)rpmRangeMinNumericUpDown.Value, 
+                    (int)rpmRangeMaxNumericUpDown.Value
+                );
             }
             
         }
@@ -167,41 +178,41 @@ namespace Sound2sfxBlend
 
         private void CheckVersion(bool ranManually = false)
         {
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    string v = client.DownloadString("https://pastebin.com/raw/XATmg05m");
-                    Assembly assembly = Assembly.GetExecutingAssembly();
-                    FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
-                    string getversion = v.Substring(v.IndexOf("$") + 1, v.LastIndexOf("$") - v.IndexOf("$") - 1);
-                    Type type1 = typeof(MainWindow);
-
-                    if (Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
-                    {
-                        if (MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                        {
-                            Process.Start(v.Substring(v.LastIndexOf("$") + 1));
-                        }
-                    }
-                    else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) >= type1.Assembly.GetName().Version.Minor)
-                    {
-                        if (MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                        {
-                            Process.Start(v.Substring(v.LastIndexOf("$") + 1));
-                        }
-                    }
-                    else if (ranManually == true)
-                    {
-                        MessageBox.Show("You're already on the latest version", $"Version {type1.Assembly.GetName().Version.Major + "." + type1.Assembly.GetName().Version.Minor + "." + type1.Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1)}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-
-            }
-            catch
-            {
-                MessageBox.Show("An error occured while checking for update. Are you connected to the internet?", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //try
+            //{
+            //    using (WebClient client = new WebClient())
+            //    {
+            //        string v = client.DownloadString("https://pastebin.com/raw/XATmg05m");
+            //        Assembly assembly = Assembly.GetExecutingAssembly();
+            //        FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+            //        string getversion = v.Substring(v.IndexOf("$") + 1, v.LastIndexOf("$") - v.IndexOf("$") - 1);
+            //        Type type1 = typeof(MainWindow);
+            //
+            //        if (Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) > type1.Assembly.GetName().Version.Minor)
+            //        {
+            //            if (MessageBox.Show($"There is a new version available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            //            {
+            //                Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+            //            }
+            //        }
+            //        else if (Convert.ToInt16(getversion.Substring(getversion.LastIndexOf(".") + 1)) > type1.Assembly.GetName().Version.Build && Convert.ToInt16(getversion.Substring(getversion.IndexOf("."), getversion.LastIndexOf(".")).Replace(".", "")) >= type1.Assembly.GetName().Version.Minor)
+            //        {
+            //            if (MessageBox.Show($"There is a new build available (version {getversion}) {System.Environment.NewLine}Would you like to download it?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            //            {
+            //                Process.Start(v.Substring(v.LastIndexOf("$") + 1));
+            //            }
+            //        }
+            //        else if (ranManually == true)
+            //        {
+            //            MessageBox.Show("You're already on the latest version", $"Version {type1.Assembly.GetName().Version.Major + "." + type1.Assembly.GetName().Version.Minor + "." + type1.Assembly.GetName().Version.Build + "." + fileVersion.FileVersion.Substring(fileVersion.FileVersion.LastIndexOf(".") + 1)}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        }
+            //    }
+            //
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("An error occured while checking for update. Are you connected to the internet?", "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
         }
 
         private void UpdateSample()
@@ -302,5 +313,10 @@ namespace Sound2sfxBlend
 
         private void ignoreLastCharsNumUD_ValueChanged(object sender, EventArgs e) => UpdateSample();
 
+        private void checkBox3_CheckedChanged(object sender, EventArgs e) {
+            overrideRPMRange = checkBox3.Checked;
+            rpmRangeMinNumericUpDown.Enabled = overrideRPMRange;
+            rpmRangeMaxNumericUpDown.Enabled = overrideRPMRange;
+        }
     }
 }
