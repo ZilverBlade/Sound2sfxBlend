@@ -1,2 +1,2 @@
 # Notice
-### This program is flagged as a trojan by windows. Not sure why, probably because it's written in .NET framework, I will probably have to rewrite the entire program
+### This program may get flagged as a trojan by windows. Not sure why, but I assure you there is no virus (you can check)
